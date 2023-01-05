@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Guess The Pin</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content=""/>
+  <style>
+    * {
+      font-family: sans-serif;
+      color-scheme: dark;
+    }
+    html, body {
+      height: 100%;
+      padding: auto;
+    }
+    html {
+      display: table;
+      margin: auto;
+    }
+    body {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    input, button {
+      all: unset;
+      background: grey;
+      border: 1px white solid;
+      padding: .3em;
+      color: white;
+    }
+    input::placeholder {
+      color:white
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess The Pin!</h1>
+  <input type="number" id="pin" placeholder="Pin Here">
+  <button id="guess">Guess</button>
+  <p id="res">Waiting...</p>
+  <hr>
+  <p>
+    Basicly The Objective Is To Guess The Correct 4 Digit Pin<br>
+    After Someone Guesses The Correct Pin It Will Change<br>
+    The Pin Is Generated Randomly From 1000 To 9999<br>
+    <br>
+    Good Luck! - <a href="https://sx9.is-a.dev">sx9dev</a>
+  </p>
+  <script>
+    async function answear() {
+      let guess = document.getElementById('pin').value;
+      let mess = await fetch('/g?pin=' + guess).then(r => r.text());
+      document.getElementById('res').innerText = mess;
+    }
+    document.onkeydown = (e) => e.keyCode !== 13 || answear();
+    document.getElementById('guess').onclick = answear
+  </script>
+</body>
+</html>
