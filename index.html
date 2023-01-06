@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Guess The Pin</title>
+  <title>PinGuess</title>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content=""/>
+  <meta name="description" content="A guessthepin.com Clone"/>
   <style>
     * {
       font-family: sans-serif;
@@ -32,15 +32,19 @@
     input::placeholder {
       color:white
     }
+    p#desc {
+      word-wrap: break-word;
+      max-width: 27em;
+    }
   </style>
 </head>
 <body>
-  <h1>Guess The Pin!</h1>
+  <h1>PinGuessr</h1>
   <input type="number" id="pin" placeholder="Pin Here">
   <button id="guess">Guess</button>
-  <p id="res">Waiting...</p>
+  <p> Response: <span id="res">Waiting...</span></p>
   <hr>
-  <p>
+  <p id="desc">
     Basicly The Objective Is To Guess The Correct 4 Digit Pin<br>
     After Someone Guesses The Correct Pin It Will Change<br>
     The Pin Is Generated Randomly From 1000 To 9999<br>
@@ -50,7 +54,12 @@
   <script>
     async function answear() {
       let guess = document.getElementById('pin').value;
-      let mess = await fetch('/g?pin=' + guess).then(r => r.text());
+      document.getElementById('res').innerText = 'Loading...';
+      let res = await fetch('/g?pin=' + guess);
+      let mess = await res.text().catch(e => {
+        alert('ERROR: CHECK CONSOLE');
+        console.error(e);
+      });
       document.getElementById('res').innerText = mess;
     }
     document.onkeydown = (e) => e.keyCode !== 13 || answear();
