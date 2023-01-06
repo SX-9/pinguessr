@@ -4,7 +4,7 @@ const fs = require('fs');
 const port = 1234;
 
 if (!fs.existsSync('./pin.txt')) fs.writeFileSync('./pin.txt',
-  Math.floor(1000 + Math.random() * 9000).toString()
+  Math.floor(1000 + Math.random() * 9000).toString().slice(0, 4)
 );
 if (!fs.existsSync('./correct.txt')) fs.writeFileSync('./correct.txt', (0).toString());
 
@@ -40,7 +40,7 @@ app.get('/g', (req, res) => {
     correct++;
     res.send('Pin Correct, Rerolling...')
     fs.writeFileSync('./pin.txt',
-      Math.floor(1000 + Math.random() * 9999).toString()
+      Math.floor(1000 + Math.random() * 9999).toString().slice(0, 4)
     );
     fs.writeFileSync('./correct.txt', correct.toString());
   }
