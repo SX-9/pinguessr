@@ -1,7 +1,7 @@
 const app = require('express')();
 const limiter = require('express-rate-limit');
 const fs = require('fs');
-const port = 1234;
+const port = process.env.PORT || 1234;
 
 if (!fs.existsSync('./pin.txt')) fs.writeFileSync('./pin.txt',
   Math.floor(1000 + Math.random() * 9000).toString().slice(0, 4)
